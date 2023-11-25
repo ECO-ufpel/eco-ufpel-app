@@ -6,7 +6,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Text>Expo dashboard route</Text>
-      <Link href="/">return to dash</Link>
+      <Link href="/">return to dashaaaaa</Link>
       <StatusBar style="auto" />
     </View>
   );

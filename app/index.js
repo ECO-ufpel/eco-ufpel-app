@@ -1,14 +1,19 @@
 import { Link } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 
-export default function App() {
+import { Button } from 'tamagui'
+
+export default function App({}) {
   return (
-    <View style={styles.container}>
-      <Text>ECO UFPEL</Text>
-      <Link href="/dash">dash poc navigation</Link>
-      <StatusBar style="auto" />
-    </View>
+    
+      <View style={styles.container}>
+        <Text>ECO UFPEL</Text>
+        <Link asChild href="/dash">
+          <Button as size="$6">
+            dash poc navigation
+          </Button>
+        </Link>
+      </View>
   );
 }
 
