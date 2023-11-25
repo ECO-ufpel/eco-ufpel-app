@@ -1,14 +1,12 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import { useStorageState } from '../hooks'
 
 const AuthContext = React.createContext(null)
 
 export function useSession() {
   const value = React.useContext(AuthContext)
-  if (process.env.NODE_ENV !== 'production') {
-    if (!value) {
-      throw new Error('useSession must be wrapped in a <SessionProvider />')
-    }
+  if (!value) {
+    throw new Error('useSession must be wrapped in a <SessionProvider />')
   }
 
   return value
@@ -21,21 +19,26 @@ export function SessionProvider(props) {
     try {
       await setSession('xxx')
     } catch (err) {
-      console.log(err)
+      console.error(err)
     }
   }, [setSession])
 
+  const signOut = useCallback(async () => {
+    await setSession(null)
+  }, [])
+
+  const memoizedValue = useMemo(
+    () => ({
+      signIn,
+      signOut,
+      session,
+      isLoading,
+    }),
+    [signIn, signOut, session, isLoading],
+  )
+
   return (
-    <AuthContext.Provider
-      value={{
-        signIn,
-        signOut: () => {
-          setSession(null)
-        },
-        session,
-        isLoading,
-      }}
-    >
+    <AuthContext.Provider value={memoizedValue}>
       {props.children}
     </AuthContext.Provider>
   )

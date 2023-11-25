@@ -1,10 +1,11 @@
 import { useFonts } from 'expo-font'
-import { TamaguiProvider } from 'tamagui'
-import tmConfig from '../tamagui.config'
-import { Slot, Stack } from 'expo-router'
+import { View } from 'tamagui'
+import { Slot } from 'expo-router'
 
-import { Text, View } from 'react-native'
+import { Text } from 'react-native'
 import { SessionProvider } from '../providers/Auth'
+import { TamaguiProvider } from '../providers/Tamagui'
+import { SchemaProvider } from '../providers/ColorSchema'
 
 export default function AppLayout() {
   const [loaded] = useFonts({
@@ -22,9 +23,11 @@ export default function AppLayout() {
 
   return (
     <SessionProvider>
-      <TamaguiProvider config={tmConfig}>
-        <Slot />
-      </TamaguiProvider>
+      <SchemaProvider>
+        <TamaguiProvider>
+          <Slot />
+        </TamaguiProvider>
+      </SchemaProvider>
     </SessionProvider>
   )
 }

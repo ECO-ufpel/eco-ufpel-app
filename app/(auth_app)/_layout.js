@@ -1,9 +1,10 @@
+import { memo } from 'react'
 import { Redirect, Stack } from 'expo-router'
 import { Text } from 'tamagui'
 
 import { useSession } from '../../providers/Auth'
 
-export default function AppLayout() {
+const Component = memo(() => {
   const { session, isLoading } = useSession()
 
   // You can keep the splash screen open, or render a loading screen like we do here.
@@ -21,4 +22,6 @@ export default function AppLayout() {
 
   // This layout can be deferred because it's not the root layout.
   return <Stack />
-}
+})
+
+export default Component
