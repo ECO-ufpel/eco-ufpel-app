@@ -4,6 +4,7 @@ import tmConfig from '../tamagui.config'
 import { Slot, Stack } from 'expo-router'
 
 import { Text, View } from 'react-native'
+import { SessionProvider } from '../providers/Auth'
 
 export default function AppLayout() {
   const [loaded] = useFonts({
@@ -20,9 +21,10 @@ export default function AppLayout() {
   }
 
   return (
-    <TamaguiProvider config={tmConfig}>
-      <Stack />
-      {/* <Slot /> */}
-    </TamaguiProvider>
+    <SessionProvider>
+      <TamaguiProvider config={tmConfig}>
+        <Slot />
+      </TamaguiProvider>
+    </SessionProvider>
   )
 }
