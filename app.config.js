@@ -1,37 +1,33 @@
 module.exports = {
-  "expo": {
-    "scheme": "eco_ufpel",
-    "name": "eco_ufpel",
-    "slug": "eco_ufpel",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "userInterfaceStyle": "automatic",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+  expo: {
+    scheme: 'eco_ufpel',
+    name: 'eco_ufpel',
+    slug: 'eco_ufpel',
+    version: '1.0.0',
+    orientation: 'portrait',
+    icon: './assets/icon.png',
+    userInterfaceStyle: 'automatic',
+    splash: {
+      image: './assets/splash.png',
+      resizeMode: 'contain',
+      backgroundColor: '#ffffff',
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "ios": {
-      "supportsTablet": true
+    assetBundlePatterns: ['**/*'],
+    ios: {
+      supportsTablet: true,
     },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      }
+    android: {
+      adaptiveIcon: {
+        foregroundImage: './assets/adaptive-icon.png',
+        backgroundColor: '#ffffff',
+      },
     },
-    "web": {
-      "favicon": "./assets/favicon.png"
+    web: {
+      favicon: './assets/favicon.png',
     },
-    "plugins": [
-      "expo-router"
-    ],
+    plugins: ['expo-router'],
     experiments: {
-      typeRoutes: true
-    }
-  }
+      typeRoutes: true,
+    },
+  },
 }

@@ -6,7 +6,8 @@
     "start": "expo start -c",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "lint": "eslint --fix --ext .js,.jsx ."
   },
   "dependencies": {
     "@tamagui/babel-plugin": "^1.79.1",
@@ -26,7 +27,9 @@
     "tamagui": "^1.79.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.0"
+    "@babel/core": "^7.20.0",
+    "@rocketseat/eslint-config": "^2.1.0",
+    "eslint": "^8.54.0"
   },
   "private": true
 }
