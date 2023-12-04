@@ -1,5 +1,6 @@
 import React, { useCallback, useMemo } from 'react'
 import { useStorageState } from '../hooks'
+import { router } from 'expo-router'
 
 const AuthContext = React.createContext(null)
 
@@ -25,6 +26,7 @@ export function SessionProvider(props) {
 
   const signOut = useCallback(async () => {
     await setSession(null)
+    router.replace('/sign-in')
   }, [])
 
   const memoizedValue = useMemo(

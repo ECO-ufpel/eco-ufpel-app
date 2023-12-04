@@ -19,7 +19,7 @@ export function Form() {
 
   const onSubmit = useCallback(async () => {
     await signIn()
-    router.replace('/')
+    router.push('/home')
   })
 
   const toggleShowPass = () => setShowPass(!showPass)

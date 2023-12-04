@@ -1,12 +1,8 @@
-import { router } from 'expo-router'
-
-import { useSession } from '../../providers/Auth'
-import { Button, View, YStack, styled, useTheme } from 'tamagui'
+import { View, YStack, styled, useTheme } from 'tamagui'
 import { ToggleSchema } from '../../components'
 import * as Login from '../../Screens/Login'
 
 export default function SignIn() {
-  const { signIn } = useSession()
   const theme = useTheme()
 
   return (

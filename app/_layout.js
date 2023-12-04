@@ -1,6 +1,6 @@
 import { useFonts } from 'expo-font'
 import { View } from 'tamagui'
-import { Slot } from 'expo-router'
+import { Slot, Stack } from 'expo-router'
 
 import { Text } from 'react-native'
 import { SessionProvider } from '../providers/Auth'
