@@ -25,7 +25,7 @@ export function Form() {
   const toggleShowPass = () => setShowPass(!showPass)
 
   return (
-    <YStack space="$6" width="100%" flex={1} mt="$6">
+    <YStack space="$6" width="100%" flex={1}>
       <YStack space="$2">
         <Heading>Entrar</Heading>
         <Text color="$gray11">lorem ipsum dolor imet</Text>
@@ -34,7 +34,7 @@ export function Form() {
       <YStack space>
         <YStack>
           <Label>CPF</Label>
-          <Input />
+          <Input keyboardType="numeric" />
         </YStack>
         <YStack>
           <Label>Senha</Label>

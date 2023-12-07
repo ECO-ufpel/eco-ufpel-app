@@ -1,4 +1,4 @@
-import { View, YStack, styled, useTheme } from 'tamagui'
+import { ScrollView, YStack, styled, useTheme } from 'tamagui'
 import { ToggleSchema } from '../../components'
 import * as Login from '../../Screens/Login'
 
@@ -17,10 +17,9 @@ export default function SignIn() {
   )
 }
 
-const Wrapper = styled(View, {
+const Wrapper = styled(ScrollView, {
   name: 'Wrapper',
   flex: 1,
-  alignItems: 'center',
 })
 
 const Content = styled(YStack, {
@@ -29,5 +28,6 @@ const Content = styled(YStack, {
   flex: 1,
   width: '95%',
   maxWidth: 400,
+  height: '1000px',
   padding: '$4',
 })
