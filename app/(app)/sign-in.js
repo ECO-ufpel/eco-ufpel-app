@@ -26,8 +26,8 @@ const Content = styled(YStack, {
   name: 'Content',
   alignItems: 'center',
   flex: 1,
+  minHeight: '100%',
   width: '95%',
   maxWidth: 400,
-  height: '1000px',
   padding: '$4',
 })
