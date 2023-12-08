@@ -3,6 +3,7 @@ import {
   Heading,
   Input,
   Label,
+  Spinner,
   Text,
   XStack,
   YStack,
@@ -18,7 +19,7 @@ export function Form() {
   const [password, setPassword] = useState('')
 
   const [showPass, setShowPass] = useState(false)
-  const { signIn } = useSession()
+  const { signIn, signInLoading } = useSession()
 
   const onSubmit = useCallback(async () => {
     try {
@@ -58,15 +59,15 @@ export function Form() {
             />
             <PasswordIcon
               color="$green10"
-              icon={Eye}
+              icon={!showPass ? Eye : EyeOff}
               chromeless
               position="absolute"
               onPress={toggleShowPass}
             />
           </XStack>
         </YStack>
-        <Button mt="$4" onPress={onSubmit}>
-          Entrar
+        <Button mt="$4" onPress={onSubmit} disabled={signInLoading}>
+          {signInLoading ? <Spinner /> : 'Entrar'}
         </Button>
       </YStack>
     </YStack>

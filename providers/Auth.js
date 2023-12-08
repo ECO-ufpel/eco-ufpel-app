@@ -17,26 +17,34 @@ export function useSession() {
 }
 
 export function SessionProvider(props) {
-  const [userInfo, setUserInfo] = useState({})
+  const [signInLoading, setSignInLoading] = useState(false)
+  const [userInfo, setUserInfo] = useState(null)
+  const [loadingUserInfo, setLoadingUserInfo] = useState(true)
   const [[isLoading, session], setSession] = useStorageState('session')
 
   const signIn = useCallback(
     async ({ username, password }) => {
-      // ToDo: remove mocked userdata
-      const { token } = await api.post('/auth/login', {
-        cpf: username,
-        password,
-      })
+      try {
+        setSignInLoading(true)
+        const { token } = await api.post('/auth/login', {
+          cpf: username,
+          password,
+        })
 
-      const userData = await api.get('/me', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
+        const userData = await api.get('/me', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
 
-      await setSession(token)
+        await setSession(token)
 
-      setUserInfo(userData)
+        setUserInfo(userData)
+      } catch (err) {
+        return Promise.reject(err)
+      } finally {
+        setSignInLoading(false)
+      }
     },
     [setSession],
   )
@@ -48,7 +56,6 @@ export function SessionProvider(props) {
 
   useEffect(() => {
     const getUserInfo = async () => {
-      // ToDo: change to /me
       const userInfo = await api.get('/me', {
         headers: {
           Authorization: `Bearer ${session}`,
@@ -56,12 +63,15 @@ export function SessionProvider(props) {
       })
 
       setUserInfo(userInfo)
-
+      setLoadingUserInfo(false)
       router.push('/home')
     }
 
     if (!isLoading && session) {
       getUserInfo(session)
+    } else if (!isLoading && !session) {
+      setLoadingUserInfo(false)
+      router.replace('/sign-in')
     }
   }, [isLoading, session])
 
@@ -72,8 +82,18 @@ export function SessionProvider(props) {
       session,
       isLoading,
       userInfo,
+      loadingUserInfo,
+      signInLoading,
     }),
-    [signIn, signOut, session, isLoading, userInfo],
+    [
+      signIn,
+      signOut,
+      session,
+      isLoading,
+      userInfo,
+      loadingUserInfo,
+      signInLoading,
+    ],
   )
 
   return (

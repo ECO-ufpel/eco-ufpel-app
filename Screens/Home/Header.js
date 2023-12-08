@@ -34,14 +34,14 @@ export function Header() {
       >
         <Animated.View entering={FadeIn.delay(500)} style={{ maxWidth: '90%' }}>
           <Heading>{name}</Heading>
-          {/* ToDo: add text overflow */}
           <Text>Atividade atual: Algoritmos e estrutu...</Text>
         </Animated.View>
         <Avatar
           width={50}
           height={50}
           entering={FadeIn.delay(500)}
-          source={logoPath}
+          source={image ? { uri: image } : logoPath}
+          borderRadius={999}
         />
       </View>
     </View>
