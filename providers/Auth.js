@@ -20,17 +20,26 @@ export function SessionProvider(props) {
   const [userInfo, setUserInfo] = useState({})
   const [[isLoading, session], setSession] = useStorageState('session')
 
-  const signIn = useCallback(async () => {
-    // ToDo: remove mocked userdata
-    const { token, ...userData } = await api.post('/auth/login', {
-      username: 'kminchelle',
-      password: '0lelplR',
-    })
+  const signIn = useCallback(
+    async ({ username, password }) => {
+      // ToDo: remove mocked userdata
+      const { token } = await api.post('/auth/login', {
+        cpf: username,
+        password,
+      })
 
-    setUserInfo(userData)
+      const userData = await api.get('/me', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
 
-    await setSession(token)
-  }, [setSession])
+      await setSession(token)
+
+      setUserInfo(userData)
+    },
+    [setSession],
+  )
 
   const signOut = useCallback(async () => {
     await setSession(null)
@@ -40,11 +49,13 @@ export function SessionProvider(props) {
   useEffect(() => {
     const getUserInfo = async () => {
       // ToDo: change to /me
-      const { token, ...userData } = await api.post('/auth/login', {
-        username: 'kminchelle',
-        password: '0lelplR',
+      const userInfo = await api.get('/me', {
+        headers: {
+          Authorization: `Bearer ${session}`,
+        },
       })
-      setUserInfo(userData)
+
+      setUserInfo(userInfo)
 
       router.push('/home')
     }

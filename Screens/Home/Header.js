@@ -6,9 +6,8 @@ import { useSession } from '../../providers/Auth'
 
 export function Header() {
   const {
-    userInfo: { firstName, lastName },
+    userInfo: { name, image },
   } = useSession()
-  const name = `${firstName} ${lastName}`
 
   const insets = useSafeAreaInsets()
 

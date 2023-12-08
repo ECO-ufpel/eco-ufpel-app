@@ -14,12 +14,15 @@ import { router } from 'expo-router'
 import { Eye, EyeOff } from '@tamagui/lucide-icons'
 
 export function Form() {
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+
   const [showPass, setShowPass] = useState(false)
   const { signIn } = useSession()
 
   const onSubmit = useCallback(async () => {
     try {
-      await signIn()
+      await signIn({ username, password })
       router.push('/home')
     } catch (err) {
       console.log(err)
@@ -38,12 +41,21 @@ export function Form() {
       <YStack space>
         <YStack>
           <Label>CPF</Label>
-          <Input keyboardType="numeric" />
+          <Input
+            onChangeText={setUsername}
+            value={username}
+            keyboardType="numeric"
+          />
         </YStack>
         <YStack>
           <Label>Senha</Label>
           <XStack width="100%">
-            <Input secureTextEntry={!showPass} flex={1} />
+            <Input
+              onChangeText={setPassword}
+              value={password}
+              secureTextEntry={!showPass}
+              flex={1}
+            />
             <PasswordIcon
               color="$green10"
               icon={Eye}
