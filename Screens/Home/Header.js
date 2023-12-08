@@ -2,8 +2,14 @@ import { Heading, Text, View, styled } from 'tamagui'
 import logoPath from '../../assets/logo_white.png'
 import Animated, { FadeIn } from 'react-native-reanimated'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { useSession } from '../../providers/Auth'
 
 export function Header() {
+  const {
+    userInfo: { firstName, lastName },
+  } = useSession()
+  const name = `${firstName} ${lastName}`
+
   const insets = useSafeAreaInsets()
 
   return (
@@ -28,7 +34,7 @@ export function Header() {
         justifyContent="space-between"
       >
         <Animated.View entering={FadeIn.delay(500)} style={{ maxWidth: '90%' }}>
-          <Heading>Daniel Núñez</Heading>
+          <Heading>{name}</Heading>
           {/* ToDo: add text overflow */}
           <Text>Atividade atual: Algoritmos e estrutu...</Text>
         </Animated.View>

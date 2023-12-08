@@ -1,6 +1,9 @@
-import React, { useCallback, useMemo } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useStorageState } from '../hooks'
 import { router } from 'expo-router'
+import { api } from '../service/api'
+
+import * as SecureStore from 'expo-secure-store'
 
 const AuthContext = React.createContext(null)
 
@@ -14,14 +17,19 @@ export function useSession() {
 }
 
 export function SessionProvider(props) {
+  const [userInfo, setUserInfo] = useState({})
   const [[isLoading, session], setSession] = useStorageState('session')
 
   const signIn = useCallback(async () => {
-    try {
-      await setSession('xxx')
-    } catch (err) {
-      console.error(err)
-    }
+    // ToDo: remove mocked userdata
+    const { token, ...userData } = await api.post('/auth/login', {
+      username: 'kminchelle',
+      password: '0lelplR',
+    })
+
+    setUserInfo(userData)
+
+    await setSession(token)
   }, [setSession])
 
   const signOut = useCallback(async () => {
@@ -29,14 +37,32 @@ export function SessionProvider(props) {
     router.replace('/sign-in')
   }, [])
 
+  useEffect(() => {
+    const getUserInfo = async () => {
+      // ToDo: change to /me
+      const { token, ...userData } = await api.post('/auth/login', {
+        username: 'kminchelle',
+        password: '0lelplR',
+      })
+      setUserInfo(userData)
+
+      router.push('/home')
+    }
+
+    if (!isLoading && session) {
+      getUserInfo(session)
+    }
+  }, [isLoading, session])
+
   const memoizedValue = useMemo(
     () => ({
       signIn,
       signOut,
       session,
       isLoading,
+      userInfo,
     }),
-    [signIn, signOut, session, isLoading],
+    [signIn, signOut, session, isLoading, userInfo],
   )
 
   return (

@@ -18,8 +18,12 @@ export function Form() {
   const { signIn } = useSession()
 
   const onSubmit = useCallback(async () => {
-    await signIn()
-    router.push('/home')
+    try {
+      await signIn()
+      router.push('/home')
+    } catch (err) {
+      console.log(err)
+    }
   })
 
   const toggleShowPass = () => setShowPass(!showPass)
