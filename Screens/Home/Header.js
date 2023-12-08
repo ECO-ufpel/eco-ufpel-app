@@ -27,7 +27,7 @@ export function Header() {
         flex={1}
         justifyContent="space-between"
       >
-        <Animated.View entering={FadeIn.delay(500)}>
+        <Animated.View entering={FadeIn.delay(500)} style={{ maxWidth: '90%' }}>
           <Heading>Daniel Núñez</Heading>
           {/* ToDo: add text overflow */}
           <Text>Atividade atual: Algoritmos e estrutu...</Text>
