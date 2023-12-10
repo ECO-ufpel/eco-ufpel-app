@@ -15,8 +15,8 @@ import { router } from 'expo-router'
 import { Eye, EyeOff } from '@tamagui/lucide-icons'
 
 export function Form() {
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
+  const [username, setUsername] = useState('12445678222')
+  const [password, setPassword] = useState('senha123456')
 
   const [showPass, setShowPass] = useState(false)
   const { signIn, signInLoading } = useSession()

@@ -56,6 +56,7 @@ export function SessionProvider(props) {
 
   useEffect(() => {
     const getUserInfo = async () => {
+      console.log('session', session)
       const userInfo = await api.get('/me', {
         headers: {
           Authorization: `Bearer ${session}`,

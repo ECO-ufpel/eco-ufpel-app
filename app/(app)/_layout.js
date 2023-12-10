@@ -11,12 +11,12 @@ const Component = memo(() => {
   if (loadingUserInfo) return <LoadingScreen />
 
   return (
-    <Stack
-      screenOptions={{
-        animation: 'fade',
-        headerShown: false,
-      }}
-    />
+      <Stack
+        screenOptions={{
+          animation: 'fade',
+          headerShown: false,
+        }}
+      />
   )
 })
 
