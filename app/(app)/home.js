@@ -1,14 +1,20 @@
 import { Button, Text, View, styled, useTheme } from 'tamagui'
 import { useSession } from '../../providers/Auth'
+import { Link } from 'expo-router'
+import * as Home from '../../Screens/Home'
 
-export default function AuthenticatedApp() {
+export default function Page() {
   const { signOut } = useSession()
   const theme = useTheme()
 
   return (
     <Wrapper backgroundColor={theme.background}>
-      <Button onPress={signOut}>Sign-out</Button>
-      <Text>Auth</Text>
+      <Home.Header />
+      <View flex={1}>
+        <Button onPress={signOut}>Sign-out</Button>
+        <Text>Auth</Text>
+        <Link href="/">teste</Link>
+      </View>
     </Wrapper>
   )
 }
