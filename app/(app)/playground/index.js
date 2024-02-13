@@ -1,18 +1,24 @@
 import { Link } from 'expo-router'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { Text, View } from 'tamagui'
+import { Text, View, styled } from 'tamagui'
 
 import * as Playground from '../../../Screens/Playground'
 
 export default function Page() {
   return (
     <SafeAreaView>
-      <View>
+      <Wrapper>
         <Text>Playground</Text>
         <Link href="/sign-in">Sign in</Link>
 
         <Playground.WebSocketExample />
-      </View>
+        <Playground.ChartsExample />
+      </Wrapper>
     </SafeAreaView>
   )
 }
+
+const Wrapper = styled(View, {
+  // 👈 styled is a helper function to create a styled component  ){
+  paddingHorizontal: '$4',
+})

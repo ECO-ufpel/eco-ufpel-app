@@ -15,10 +15,12 @@ export const WebSocketExample = () => {
   })
 
   return (
-    <Wrapper>
-      <Text>WebSocketExample</Text>
+    <View>
+      <Text fontSize="$8" marginTop="$10">
+        Websocket
+      </Text>
       {onScreen && <SocketComponent />}
-    </Wrapper>
+    </View>
   )
 }
 
@@ -49,8 +51,3 @@ const SocketComponent = () => {
     </View>
   )
 }
-
-const Wrapper = styled(View, {
-  name: 'Wrapper',
-  padding: '$4',
-})
