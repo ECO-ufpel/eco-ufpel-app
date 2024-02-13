@@ -1,6 +1,5 @@
-import { memo, useEffect } from 'react'
-import { Redirect, Slot, Stack, usePathname, useRouter } from 'expo-router'
-import { Text, View } from 'tamagui'
+import { memo } from 'react'
+import { Stack } from 'expo-router'
 
 import { useSession } from '../../providers/Auth'
 import { LoadingScreen } from '../../components'

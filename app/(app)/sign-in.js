@@ -1,6 +1,7 @@
 import { ScrollView, YStack, styled, useTheme } from 'tamagui'
 import { ToggleSchema } from '../../components'
 import * as Login from '../../Screens/Login'
+import { Link } from 'expo-router'
 
 export default function SignIn() {
   const theme = useTheme()
@@ -10,6 +11,8 @@ export default function SignIn() {
       <Content space>
         <Login.Header mt="$12" />
         <Login.Form />
+        {/* ToDo: remove when  */}
+        <Link href="/playground">Playground</Link>
         <ToggleSchema />
         <Login.Footer />
       </Content>
