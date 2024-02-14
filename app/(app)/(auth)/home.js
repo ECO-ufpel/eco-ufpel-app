@@ -1,7 +1,7 @@
 import { Button, Text, View, styled, useTheme } from 'tamagui'
-import { useSession } from '../../providers/Auth'
+import { useSession } from '../../../providers/Auth'
 import { Link } from 'expo-router'
-import * as Home from '../../Screens/Home'
+import * as Home from '../../../Screens/Home'
 
 export default function Page() {
   const { signOut } = useSession()
@@ -13,7 +13,8 @@ export default function Page() {
       <View flex={1}>
         <Button onPress={signOut}>Sign-out</Button>
         <Text>Auth</Text>
-        <Link href="/">teste</Link>
+        <Link href="/playground">Playground</Link>
+        <Link href="/">aa</Link>
       </View>
     </Wrapper>
   )
