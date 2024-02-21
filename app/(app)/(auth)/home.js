@@ -11,10 +11,10 @@ import {
 import { useSession } from '../../../providers/Auth'
 import { Link } from 'expo-router'
 import * as Home from '../../../Screens/Home'
-import * as Playground from '../../../Screens/Playground'
 import { CalendarClock, Map, PlaySquare } from '@tamagui/lucide-icons'
 import Carousel from 'react-native-reanimated-carousel'
 import { Dimensions } from 'react-native'
+import { CircularProgress } from '../../../components/CircularProgress'
 
 export default function Page() {
   const { signOut } = useSession()
@@ -33,7 +33,7 @@ export default function Page() {
             height={300}
             renderItem={() => (
               <View justifyContent="center" alignItems="center">
-                <Playground.CircularExample />
+                <CircularProgress />
               </View>
             )}
           />

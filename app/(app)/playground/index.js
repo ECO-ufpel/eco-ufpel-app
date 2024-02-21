@@ -15,6 +15,7 @@ export default function Page() {
         <Playground.WebSocketExample />
         <Playground.ChartsExample />
         <Playground.CircularExample />
+        <Playground.MapExample />
       </Wrapper>
     </SafeAreaView>
   )
