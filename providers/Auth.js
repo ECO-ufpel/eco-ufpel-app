@@ -3,8 +3,6 @@ import { useStorageState } from '../hooks'
 import { router } from 'expo-router'
 import { api } from '../service/api'
 
-import * as SecureStore from 'expo-secure-store'
-
 const AuthContext = React.createContext(null)
 
 export function useSession() {
