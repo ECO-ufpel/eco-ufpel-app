@@ -8,6 +8,7 @@ export const api = axios.create({
 
 api.interceptors.response.use(
   async function (response) {
+    console.log('[AXIOS] Response', response.data)
     return response.data
   },
   async function (error) {
