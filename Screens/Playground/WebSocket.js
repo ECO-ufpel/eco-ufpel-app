@@ -1,7 +1,7 @@
 import { useFocusEffect } from 'expo-router'
 import { useEffect, useState } from 'react'
 import useWebSocket from 'react-use-websocket'
-import { Button, Text, View, styled } from 'tamagui'
+import { Button, Text, View } from 'tamagui'
 
 export const WebSocketExample = () => {
   const [onScreen, setOnScreen] = useState(false)

@@ -33,37 +33,33 @@ export const CircularExample = () => {
   }
 
   return (
-    <View paddingHorizontal="$4">
-      <View alignItems="center" justifyContent="center" marginVertical="$8">
-        <AnimatedCircularProgress
-          size={300}
-          width={32}
-          fill={progress}
-          tintColor={colorStatus}
-          lineCap="round"
-          arcSweepAngle={270}
-          rotation={225}
-          backgroundColor="#0000000f"
-        >
-          {() => {
-            return (
-              <Stack>
-                <Text marginBottom="$4">
-                  Uso atual:{' '}
-                  <Text color={colorStatus}>
-                    <Text color={colorStatus} fontSize={28} fontWeight={600}>
-                      {progress}
-                    </Text>
-                    KW/h
-                  </Text>
+    <AnimatedCircularProgress
+      size={300}
+      width={32}
+      fill={progress}
+      tintColor={colorStatus}
+      lineCap="round"
+      arcSweepAngle={270}
+      rotation={225}
+      backgroundColor="#0000000f"
+    >
+      {() => {
+        return (
+          <Stack>
+            <Text marginBottom="$4">
+              Uso atual:{' '}
+              <Text color={colorStatus}>
+                <Text color={colorStatus} fontSize={28} fontWeight={600}>
+                  {progress}
                 </Text>
-                <Text>Uso normal: {ideal} KW/h</Text>
-              </Stack>
-            )
-          }}
-        </AnimatedCircularProgress>
-      </View>
-      <Button onPress={handleProgress}>Change Progress</Button>
-    </View>
+                KW/h
+              </Text>
+              <Button onPress={handleProgress}>Change Progress</Button>
+            </Text>
+            <Text>Uso normal: {ideal} KW/h</Text>
+          </Stack>
+        )
+      }}
+    </AnimatedCircularProgress>
   )
 }
