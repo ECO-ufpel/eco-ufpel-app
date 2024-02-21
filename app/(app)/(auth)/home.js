@@ -2,6 +2,7 @@ import { Button, Text, View, styled, useTheme } from 'tamagui'
 import { useSession } from '../../../providers/Auth'
 import { Link } from 'expo-router'
 import * as Home from '../../../Screens/Home'
+import * as Playground from '../../../Screens/Playground'
 
 export default function Page() {
   const { signOut } = useSession()
@@ -11,6 +12,7 @@ export default function Page() {
     <Wrapper backgroundColor={theme.background}>
       <Home.Header />
       <View flex={1}>
+        <Playground.CircularExample />
         <Button onPress={signOut}>Sign-out</Button>
         <Text>Auth</Text>
         <Link href="/playground">Playground</Link>

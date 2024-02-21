@@ -10,9 +10,11 @@ export default function Page() {
       <Wrapper>
         <Text>Playground</Text>
         <Link href="/sign-in">Sign in</Link>
+        <Link href="/home">Home</Link>
 
         <Playground.WebSocketExample />
         <Playground.ChartsExample />
+        <Playground.CircularExample />
       </Wrapper>
     </SafeAreaView>
   )
