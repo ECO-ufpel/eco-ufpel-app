@@ -38,10 +38,10 @@ export function SessionProvider(props) {
         await setSession(token)
 
         setUserInfo(userData)
-      } catch (err) {
-        return Promise.reject(err)
-      } finally {
         setSignInLoading(false)
+      } catch (err) {
+        setSignInLoading(false)
+        return Promise.reject(err)
       }
     },
     [setSession],
