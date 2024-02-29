@@ -38,10 +38,11 @@ export function SessionProvider(props) {
         await setSession(token)
 
         setUserInfo(userData)
-      } catch (err) {
-        return Promise.reject(err)
-      } finally {
         setSignInLoading(false)
+      } catch (err) {
+        setLoadingUserInfo(false)
+        setSignInLoading(false)
+        return Promise.reject(err)
       }
     },
     [setSession],
@@ -54,15 +55,20 @@ export function SessionProvider(props) {
 
   useEffect(() => {
     const getUserInfo = async () => {
-      const userInfo = await api.get('/me', {
-        headers: {
-          Authorization: `Bearer ${session}`,
-        },
-      })
+      try {
+        const userInfo = await api.get('/me', {
+          headers: {
+            Authorization: `Bearer ${session}`,
+          },
+        })
 
-      setUserInfo(userInfo)
-      setLoadingUserInfo(false)
-      router.push('/home')
+        setUserInfo(userInfo)
+        setLoadingUserInfo(false)
+        router.push('/home')
+      } catch (err) {
+        setUserInfo(null)
+        setLoadingUserInfo(false)
+      }
     }
 
     if (!isLoading && session) {

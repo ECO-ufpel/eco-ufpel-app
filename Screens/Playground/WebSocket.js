@@ -2,9 +2,20 @@ import { useFocusEffect } from 'expo-router'
 import { useEffect, useState } from 'react'
 import useWebSocket from 'react-use-websocket'
 import { Button, Text, View } from 'tamagui'
+import * as SecureStore from 'expo-secure-store'
 
 export const WebSocketExample = () => {
   const [onScreen, setOnScreen] = useState(false)
+  const [tokenLocal, setTokenLocal] = useState('')
+
+  useEffect(() => {
+    const asyncToken = async () => {
+      const token = await SecureStore.getItemAsync('session')
+      setTokenLocal(token)
+    }
+
+    asyncToken()
+  }, [])
 
   useFocusEffect(() => {
     setOnScreen(true)
@@ -19,19 +30,20 @@ export const WebSocketExample = () => {
       <Text fontSize="$8" marginTop="$10">
         Websocket
       </Text>
-      {onScreen && <SocketComponent />}
+      {tokenLocal && onScreen && <SocketComponent token={tokenLocal} />}
     </View>
   )
 }
 
-const SocketComponent = () => {
-  const { readyState, sendMessage, lastMessage, getWebSocket } = useWebSocket(
-    'wss://echo.websocket.org',
-    {
+const SocketComponent = ({ token }) => {
+  const query = new URLSearchParams({ token: `Bearer ${token}` })
+  const { readyState, sendJsonMessage, lastMessage, getWebSocket } =
+    useWebSocket(`${process.env.EXPO_PUBLIC_WEBSOCKET_URL}/ws?${query}`, {
+      onMessage: (event) => console.log('mensagem recebida', event),
       onClose: () => console.log('conexão fechada'),
       onOpen: () => console.log('conexão aberta'),
-    },
-  )
+      onError: (err) => console.log('erro', err),
+    })
 
   useEffect(() => {
     return () => {
@@ -47,7 +59,15 @@ const SocketComponent = () => {
         {lastMessage ? JSON.stringify(lastMessage, null, 2) : 'none'}
       </Text>
 
-      <Button onPress={() => sendMessage('ping')}>Knock Knock</Button>
+      <Button
+        onPress={() =>
+          sendJsonMessage({
+            teste: 'oi',
+          })
+        }
+      >
+        Knock Knock
+      </Button>
     </View>
   )
 }

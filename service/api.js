@@ -4,11 +4,23 @@ import * as SecureStore from 'expo-secure-store'
 
 export const api = axios.create({
   baseURL: process.env.EXPO_PUBLIC_API_URL,
+  timeout: 5000,
+})
+
+api.interceptors.request.use(async function (request) {
+  const token = await SecureStore.getItemAsync('session')
+
+  if (token) {
+    request.headers.Autorization = `Bearer ${token}`
+  }
+
+  console.log('request', request)
+
+  return request
 })
 
 api.interceptors.response.use(
   async function (response) {
-    console.log('[AXIOS] Response', response.data)
     return response.data
   },
   async function (error) {

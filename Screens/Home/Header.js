@@ -3,11 +3,13 @@ import logoPath from '../../assets/logo_white.png'
 import Animated, { FadeIn } from 'react-native-reanimated'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useSession } from '../../providers/Auth'
+import { useActivity } from '../../providers/ActivityWS'
 
 export function Header() {
   const {
     userInfo: { name, image },
   } = useSession()
+  const { currentActivity } = useActivity()
 
   const insets = useSafeAreaInsets()
 
@@ -34,7 +36,7 @@ export function Header() {
       >
         <Animated.View entering={FadeIn.delay(500)} style={{ maxWidth: '90%' }}>
           <Heading>{name}</Heading>
-          <Text>Atividade atual: Algoritmos e estrutu...</Text>
+          {currentActivity && <Text>{currentActivity}</Text>}
         </Animated.View>
         <Avatar
           width={50}
