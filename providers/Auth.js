@@ -55,15 +55,20 @@ export function SessionProvider(props) {
 
   useEffect(() => {
     const getUserInfo = async () => {
-      const userInfo = await api.get('/me', {
-        headers: {
-          Authorization: `Bearer ${session}`,
-        },
-      })
+      try {
+        const userInfo = await api.get('/me', {
+          headers: {
+            Authorization: `Bearer ${session}`,
+          },
+        })
 
-      setUserInfo(userInfo)
-      setLoadingUserInfo(false)
-      router.push('/home')
+        setUserInfo(userInfo)
+        setLoadingUserInfo(false)
+        router.push('/home')
+      } catch (err) {
+        setUserInfo(null)
+        setLoadingUserInfo(false)
+      }
     }
 
     if (!isLoading && session) {

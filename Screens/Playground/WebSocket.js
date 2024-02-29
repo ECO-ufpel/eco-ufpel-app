@@ -36,14 +36,14 @@ export const WebSocketExample = () => {
 }
 
 const SocketComponent = ({ token }) => {
-  const { readyState, sendMessage, lastMessage, getWebSocket } = useWebSocket(
-    process.env.EXPO_PUBLIC_WEBSOCKET_URL + `/?token=${token}`,
-    {
+  const query = new URLSearchParams({ token: `Bearer ${token}` })
+  const { readyState, sendJsonMessage, lastMessage, getWebSocket } =
+    useWebSocket(`${process.env.EXPO_PUBLIC_WEBSOCKET_URL}/ws?${query}`, {
+      onMessage: (event) => console.log('mensagem recebida', event),
       onClose: () => console.log('conexão fechada'),
       onOpen: () => console.log('conexão aberta'),
       onError: (err) => console.log('erro', err),
-    },
-  )
+    })
 
   useEffect(() => {
     return () => {
@@ -59,7 +59,15 @@ const SocketComponent = ({ token }) => {
         {lastMessage ? JSON.stringify(lastMessage, null, 2) : 'none'}
       </Text>
 
-      <Button onPress={() => sendMessage()}>Knock Knock</Button>
+      <Button
+        onPress={() =>
+          sendJsonMessage({
+            teste: 'oi',
+          })
+        }
+      >
+        Knock Knock
+      </Button>
     </View>
   )
 }

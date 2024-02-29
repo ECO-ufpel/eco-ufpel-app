@@ -12,7 +12,7 @@ export default function Page() {
         <Link href="/sign-in">Sign in</Link>
         <Link href="/home">Home</Link>
 
-        <Playground.WebSocketExample />
+        {/* <Playground.WebSocketExample /> */}
         <Playground.ChartsExample />
         <Playground.CircularExample />
         <Playground.MapExample />
@@ -22,6 +22,5 @@ export default function Page() {
 }
 
 const Wrapper = styled(ScrollView, {
-  // 👈 styled is a helper function to create a styled component  ){
   paddingHorizontal: '$4',
 })

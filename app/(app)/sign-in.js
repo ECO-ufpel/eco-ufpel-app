@@ -11,8 +11,6 @@ export default function SignIn() {
       <Content space>
         <Login.Header mt="$12" />
         <Login.Form />
-        {/* ToDo: remove when  */}
-        <Link href="/playground">Playground</Link>
         <ToggleSchema />
         <Login.Footer />
       </Content>
