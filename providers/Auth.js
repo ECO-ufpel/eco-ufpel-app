@@ -40,6 +40,7 @@ export function SessionProvider(props) {
         setUserInfo(userData)
         setSignInLoading(false)
       } catch (err) {
+        setLoadingUserInfo(false)
         setSignInLoading(false)
         return Promise.reject(err)
       }
