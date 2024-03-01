@@ -49,8 +49,8 @@ export function SessionProvider(props) {
   )
 
   const signOut = useCallback(async () => {
-    await setSession(null)
     router.replace('/sign-in')
+    await setSession(null)
   }, [])
 
   useEffect(() => {

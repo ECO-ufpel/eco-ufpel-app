@@ -1,7 +1,7 @@
 import React from 'react'
-import { View, Text, Heading, Image, styled, useTheme } from 'tamagui'
+import { View, Heading, styled } from 'tamagui'
 import logoPath from '../../assets/logo_white.png'
-import Animated, { FadeIn, LightSpeedInLeft } from 'react-native-reanimated'
+import Animated, { FadeIn } from 'react-native-reanimated'
 
 export function Header(props) {
   return (

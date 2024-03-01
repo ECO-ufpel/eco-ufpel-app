@@ -11,7 +11,7 @@ api.interceptors.request.use(async function (request) {
   const token = await SecureStore.getItemAsync('session')
 
   if (token) {
-    request.headers.Autorization = `Bearer ${token}`
+    request.headers.Authorization = `Bearer ${token}`
   }
 
   console.log('request', request)
@@ -26,8 +26,9 @@ api.interceptors.response.use(
   async function (error) {
     const isForbidden = error.response?.status === 403
     const token = await SecureStore.getItemAsync('session')
+    const url = error.config.url
 
-    if (isForbidden && token) {
+    if (isForbidden && token && String(url).endsWith('/me')) {
       await SecureStore.deleteItemAsync('session')
       router.replace('/sign-in')
     }

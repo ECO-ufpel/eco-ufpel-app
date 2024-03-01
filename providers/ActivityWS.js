@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useStorageState } from '../hooks'
 import useWebSocket from 'react-use-websocket'
 
@@ -27,12 +27,21 @@ export function ActivityProvider(props) {
 
   const [[_, token]] = useStorageState('session')
   const query = new URLSearchParams({ token: `Bearer ${token}` })
-  useWebSocket(`${process.env.EXPO_PUBLIC_WEBSOCKET_URL}/ws?${query}`, {
-    onMessage: handlerMessage,
-    onClose: () => console.log('conexão fechada'),
-    onOpen: () => console.log('conexão aberta'),
-    onError: (err) => console.log('erro', err),
-  })
+  const { getWebSocket } = useWebSocket(
+    `${process.env.EXPO_PUBLIC_WEBSOCKET_URL}/ws?${query}`,
+    {
+      onMessage: handlerMessage,
+      onClose: () => console.log('conexão fechada'),
+      onOpen: () => console.log('conexão aberta'),
+      onError: (err) => console.log('erro', err),
+    },
+  )
+
+  useEffect(() => {
+    return () => {
+      getWebSocket().close()
+    }
+  }, [])
 
   return (
     <ActivityConsumeWS.Provider

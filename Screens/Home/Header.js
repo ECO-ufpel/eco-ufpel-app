@@ -36,7 +36,7 @@ export function Header() {
       >
         <Animated.View entering={FadeIn.delay(500)} style={{ maxWidth: '90%' }}>
           <Heading>{name}</Heading>
-          {currentActivity && <Text>{currentActivity}</Text>}
+          <Text>{currentActivity || 'Carregando'}</Text>
         </Animated.View>
         <Avatar
           width={50}
