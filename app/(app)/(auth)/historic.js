@@ -1,14 +1,15 @@
 import { useEffect, useState } from 'react'
-import { Text, View } from 'tamagui'
+import { ScrollView, Text, View } from 'tamagui'
 import { api } from '../../../service/api'
 import { useActivity } from '../../../providers/ActivityWS'
 
 import * as React from 'react'
-import { CartesianChart, Line, useChartPressState } from 'victory-native'
+import { CartesianChart, Line, Bar, useChartPressState } from 'victory-native'
 import {
   Circle,
   useFont,
   vec,
+  LinearGradient,
   Line as SkiaLine,
   Text as SkiaText,
 } from '@shopify/react-native-skia'
@@ -19,6 +20,7 @@ import { Stack } from 'expo-router'
 export default function Page() {
   const { currentActivity } = useActivity()
   const [monthHistory, setActivityMonthHistoric] = useState([])
+  const [weekHistory, setActivityWeekHistoric] = useState([])
 
   useEffect(() => {
     if (currentActivity) {
@@ -31,15 +33,15 @@ export default function Page() {
           },
         })
         .then((response) => {
-          setActivityMonthHistoric(
-            response.map((e) => ({
-              day:
-                new Date(e.date).getDate() +
-                '/' +
-                Number(new Date(e.date).getMonth() + 1),
-              value: e.avgConsumption,
-            })),
-          )
+          let monthDates = response.map((e) => ({
+            day:
+              new Date(e.date).getDate() +
+              '/' +
+              Number(new Date(e.date).getMonth() + 1),
+            value: e.avgConsumption,
+          }))
+          setActivityMonthHistoric(monthDates)
+          setActivityWeekHistoric(monthDates.slice(monthDates.length - 7))
         })
         .catch((error) => {
           console.log('aqui no erro', error)
@@ -49,12 +51,63 @@ export default function Page() {
 
   return (
     <View marginHorizontal="$4" marginTop="$4">
-      <Stack.Screen options={{ title: 'Histórico' }} />
+      <Stack.Screen options={{ title: 'Histórico' }} /> 
       <Text fontSize="$9">Histórico</Text>
       <Text>Referente a atividade: {currentActivity}</Text>
       {monthHistory.length > 0 && <ChartMonth data={monthHistory} />}
+      {weekHistory.length > 0 && <ChartWeek data={weekHistory} />}
       {/* ToDo: consumo semanal em barras */}
     </View>
+  )
+}
+
+export function ChartWeek({ data }) {
+  const font = useFont(inter, 12)
+  const weekDays = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab']
+
+  return (
+    <View style={{ height: 300 }} marginVertical="$4">
+      <View alignItems="center" marginBottom="$4">
+        <Text fontSize="$6">Consumo Semanal</Text>
+      </View>
+      <Text fontSize="$4" color="green" marginBottom="$4">
+        kW/h
+      </Text>
+      <CartesianChart
+        data={data}  
+        xKey="day"
+        yKeys={['value']}
+        axisOptions={{
+          font,
+          labelColor: 'green',
+          formatXLabel(value) {
+            const year = new Date().getFullYear()
+            const month = parseInt(value.split('/')[1])
+            const day = parseInt(value.split('/')[0])
+            const date = new Date(year, month - 1, day).getDay()
+          
+            return weekDays[date]
+          },
+        }} // 👈 we'll generate axis labels using given font.
+        domainPadding={{ left: 30, top: 7, right: 30, bottom: 7 }}
+      >
+        {({ points, chartBounds }) => (
+          <Bar
+            chartBounds={chartBounds}  // 👈 chartBounds is needed to know how to draw the bars
+            points={points.value} // 👈 points is an object with a property for each yKey
+            roundedCorners={{
+              topLeft: 5,
+              topRight: 5,
+            }}>
+            <LinearGradient
+              start={vec(0, 0)}
+              end={vec(0, 400)}
+              colors={["#008000", "#23bd6d50"]}
+            />
+          </Bar>
+        )}
+      </CartesianChart>
+  </View>
   )
 }
 
