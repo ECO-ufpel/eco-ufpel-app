@@ -35,35 +35,44 @@ export default function Page() {
             <CircularProgress max={100} progress={currentConsumption} />
           </View>
         </View>
-        <XStack gap="$4" margin="$4" marginTop="0">
-          <Link asChild href="/historic" disabled={!currentActivity}>
-            <Button
-              flex={1}
-              aspectRatio={1}
-              opacity={!currentActivity ? 0.5 : 1}
-            >
-              <Stack alignItems="center" justifyContent="center" gap="$2">
-                <CalendarClock size={18} color="$green11" />
-                <Text color="$green11">Histórico</Text>
-              </Stack>
-            </Button>
-          </Link>
-          <Button flex={1} aspectRatio={1}>
-            <Stack alignItems="center" justifyContent="center" gap="$2">
-              <Map size={18} color="$green11" />
-              <Text color="$green11">Mapa</Text>
-            </Stack>
-          </Button>
-          <Link replace asChild href="/playground">
-            <Button flex={1} aspectRatio={1}>
+        <ScrollView horizontal>
+          <XStack gap="$4" margin="$4" marginTop="0">
+            <Link asChild href="/historic" disabled={!currentActivity}>
+              <StyledButton
+                flex={1}
+                aspectRatio={1}
+                opacity={!currentActivity ? 0.5 : 1}
+              >
+                <Stack alignItems="center" justifyContent="center" gap="$2">
+                  <CalendarClock size={18} color="$green11" />
+                  <Text color="$green11">Histórico</Text>
+                </Stack>
+              </StyledButton>
+            </Link>
+            <Link asChild href="/map">
+              <StyledButton flex={1} aspectRatio={1}>
+                <Stack alignItems="center" justifyContent="center" gap="$2">
+                  <Map size={18} color="$green11" />
+                  <Text color="$green11">Mapa</Text>
+                </Stack>
+              </StyledButton>
+            </Link>
+            <StyledButton flex={1} aspectRatio={1} onPress={signOut}>
               <Stack alignItems="center" justifyContent="center" gap="$2">
                 <PlaySquare size={18} color="$green11" />
-                <Text color="$green11">Playground</Text>
+                <Text color="$green11">Sair</Text>
               </Stack>
-            </Button>
-          </Link>
-        </XStack>
-        <Button onPress={signOut}>Sign-out</Button>
+            </StyledButton>
+            <Link replace asChild href="/playground">
+              <StyledButton flex={1} aspectRatio={1}>
+                <Stack alignItems="center" justifyContent="center" gap="$2">
+                  <PlaySquare size={18} color="$green11" />
+                  <Text color="$green11">Playground</Text>
+                </Stack>
+              </StyledButton>
+            </Link>
+          </XStack>
+        </ScrollView>
       </ScrollView>
     </Wrapper>
   )
@@ -74,4 +83,11 @@ const Wrapper = styled(View, {
   flex: 1,
   alignContent: 'center',
   justifyContent: 'center',
+})
+
+const StyledButton = styled(Button, {
+  name: 'StyledButton',
+  flex: 1,
+  aspectRatio: 1,
+  minWidth: 110,
 })

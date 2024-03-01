@@ -14,8 +14,6 @@ api.interceptors.request.use(async function (request) {
     request.headers.Authorization = `Bearer ${token}`
   }
 
-  console.log('request', request)
-
   return request
 })
 

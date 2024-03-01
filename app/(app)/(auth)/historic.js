@@ -25,7 +25,7 @@ export default function Page() {
       api
         .get('https://backend-deploy-0bfm.onrender.com/sensor/data/history', {
           params: {
-            room_id: 330,
+            room_id: Number(currentActivity),
             start_time: '2024-01-25T00:00:00', // ToDo: endDate - 30 days
             end_time: '2024-02-25T00:00:00', // ToDo: new Date()
           },

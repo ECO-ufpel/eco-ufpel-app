@@ -25,15 +25,21 @@ export function ActivityProvider(props) {
     }
   }, [])
 
+  const handleOpenConection = () => {
+    console.log('[Provider] WS: Conexão aberta')
+    console.log('[Provider] WS: Enviando mensagem de cadastro')
+  }
+
   const [[_, token]] = useStorageState('session')
   const query = new URLSearchParams({ token: `Bearer ${token}` })
+
   const { getWebSocket } = useWebSocket(
     `${process.env.EXPO_PUBLIC_WEBSOCKET_URL}/ws?${query}`,
     {
       onMessage: handlerMessage,
-      onClose: () => console.log('conexão fechada'),
-      onOpen: () => console.log('conexão aberta'),
-      onError: (err) => console.log('erro', err),
+      onClose: () => console.log('[Provider] conexão fechada'),
+      onOpen: handleOpenConection,
+      onError: (err) => console.log('[Provider] erro', err),
     },
   )
 
