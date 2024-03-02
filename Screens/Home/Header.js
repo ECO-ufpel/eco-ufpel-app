@@ -44,7 +44,13 @@ export function Header() {
           width={50}
           height={50}
           entering={FadeIn.delay(500)}
-          source={image ? { uri: image } : logoPath}
+          source={
+            image
+              ? { uri: image }
+              : {
+                  uri: 'https://i.pinimg.com/736x/fa/60/51/fa6051d72b821cb48a8cc71d3481dfef.jpg',
+                }
+          }
           borderRadius={999}
         />
       </View>
