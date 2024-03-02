@@ -1,4 +1,4 @@
-import { ScrollView, Text, View, XStack } from 'tamagui'
+import { ScrollView, Text, View, XStack, useTheme } from 'tamagui'
 import { MapaSVG } from '../../../assets/Mapa'
 import { Dimensions } from 'react-native'
 import { Map } from '@tamagui/lucide-icons'
@@ -10,6 +10,8 @@ import { useEffect, useState } from 'react'
 const salas = Array.from({ length: 11 }, (_, i) => i + 330)
 
 export default function Page() {
+  const theme = useTheme()
+  const background = theme.background.get()
   const [mapaConsumption, setMapaConsumption] = useState(() => {
     const initial = {}
     salas.forEach((sala) => {
@@ -59,7 +61,7 @@ export default function Page() {
   }, [])
 
   return (
-    <ScrollView>
+    <ScrollView backgroundColor={background}>
       <Stack.Screen
         options={{
           title: 'Mapa',

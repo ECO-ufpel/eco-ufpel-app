@@ -11,12 +11,19 @@ import {
 import { Stack as ExpoStack, Link } from 'expo-router'
 import { useSession } from '../../../providers/Auth'
 import * as Home from '../../../Screens/Home'
-import { CalendarClock, Map, PlaySquare } from '@tamagui/lucide-icons'
+import {
+  CalendarClock,
+  Map,
+  PlaySquare,
+  ToggleRight,
+} from '@tamagui/lucide-icons'
 import { CircularProgress } from '../../../components/CircularProgress'
 import { useActivity } from '../../../providers/ActivityWS'
+import { useSchema } from '../../../providers/ColorSchema'
 
 export default function Page() {
   const { signOut } = useSession()
+  const { toggleSchema } = useSchema()
   const { currentConsumption, currentActivity } = useActivity()
 
   const theme = useTheme()
@@ -57,20 +64,29 @@ export default function Page() {
                 </Stack>
               </StyledButton>
             </Link>
+            <StyledButton flex={1} aspectRatio={1} onPress={toggleSchema}>
+              <Stack alignItems="center" justifyContent="center" gap="$2">
+                <ToggleRight size={18} color="$green11" />
+                <Text textAlign="center" color="$green11">
+                  Trocar Tema
+                </Text>
+              </Stack>
+            </StyledButton>
             <StyledButton flex={1} aspectRatio={1} onPress={signOut}>
               <Stack alignItems="center" justifyContent="center" gap="$2">
                 <PlaySquare size={18} color="$green11" />
                 <Text color="$green11">Sair</Text>
               </Stack>
             </StyledButton>
-            <Link replace asChild href="/playground">
+
+            {/* <Link replace asChild href="/playground">
               <StyledButton flex={1} aspectRatio={1}>
                 <Stack alignItems="center" justifyContent="center" gap="$2">
                   <PlaySquare size={18} color="$green11" />
                   <Text color="$green11">Playground</Text>
                 </Stack>
               </StyledButton>
-            </Link>
+            </Link> */}
           </XStack>
         </ScrollView>
       </ScrollView>
