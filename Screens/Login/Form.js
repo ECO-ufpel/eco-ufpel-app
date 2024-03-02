@@ -13,6 +13,7 @@ import { useSession } from '../../providers/Auth'
 import { useCallback, useState } from 'react'
 import { router } from 'expo-router'
 import { Eye, EyeOff } from '@tamagui/lucide-icons'
+import { Alert } from 'react-native'
 
 export function Form() {
   const [username, setUsername] = useState('')
@@ -26,6 +27,7 @@ export function Form() {
       await signIn({ username, password })
       router.push('/home')
     } catch (err) {
+      Alert.alert('Erro', 'Ocorreu um erro ao tentar realizar o login')
       console.log(err)
     }
   })

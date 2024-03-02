@@ -6,10 +6,11 @@ import { useSession } from '../../providers/Auth'
 import { useActivity } from '../../providers/ActivityWS'
 
 export function Header() {
-  const {
-    userInfo: { name, image },
-  } = useSession()
+  const { userInfo } = useSession()
   const { currentActivity } = useActivity()
+
+  const name = userInfo?.name
+  const image = userInfo?.image
 
   const insets = useSafeAreaInsets()
 

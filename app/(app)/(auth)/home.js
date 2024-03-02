@@ -42,44 +42,32 @@ export default function Page() {
             <CircularProgress max={100} progress={currentConsumption} />
           </View>
         </View>
-        <ScrollView horizontal>
-          <XStack gap="$4" margin="$4" marginTop="0">
-            <Link asChild href="/historic" disabled={!currentActivity}>
-              <StyledButton
-                flex={1}
-                aspectRatio={1}
-                opacity={!currentActivity ? 0.5 : 1}
-              >
-                <Stack alignItems="center" justifyContent="center" gap="$2">
-                  <CalendarClock size={18} color="$green11" />
-                  <Text color="$green11">Histórico</Text>
-                </Stack>
-              </StyledButton>
-            </Link>
-            <Link asChild href="/map">
-              <StyledButton flex={1} aspectRatio={1}>
-                <Stack alignItems="center" justifyContent="center" gap="$2">
-                  <Map size={18} color="$green11" />
-                  <Text color="$green11">Mapa</Text>
-                </Stack>
-              </StyledButton>
-            </Link>
-            <StyledButton flex={1} aspectRatio={1} onPress={toggleSchema}>
+        {/* <ScrollView horizontal>
+          
+        </ScrollView> */}
+        <XStack gap="$6" margin="$6" marginTop="0">
+          <Link asChild href="/historic" disabled={!currentActivity}>
+            <StyledButton
+              flex={1}
+              aspectRatio={1}
+              opacity={!currentActivity ? 0.5 : 1}
+            >
               <Stack alignItems="center" justifyContent="center" gap="$2">
-                <ToggleRight size={18} color="$green11" />
-                <Text textAlign="center" color="$green11">
-                  Trocar Tema
-                </Text>
+                <CalendarClock size={18} color="$green11" />
+                <Text color="$green11">Histórico</Text>
               </Stack>
             </StyledButton>
-            <StyledButton flex={1} aspectRatio={1} onPress={signOut}>
+          </Link>
+          <Link asChild href="/map">
+            <StyledButton flex={1} aspectRatio={1}>
               <Stack alignItems="center" justifyContent="center" gap="$2">
-                <PlaySquare size={18} color="$green11" />
-                <Text color="$green11">Sair</Text>
+                <Map size={18} color="$green11" />
+                <Text color="$green11">Mapa</Text>
               </Stack>
             </StyledButton>
+          </Link>
 
-            {/* <Link replace asChild href="/playground">
+          {/* <Link replace asChild href="/playground">
               <StyledButton flex={1} aspectRatio={1}>
                 <Stack alignItems="center" justifyContent="center" gap="$2">
                   <PlaySquare size={18} color="$green11" />
@@ -87,8 +75,32 @@ export default function Page() {
                 </Stack>
               </StyledButton>
             </Link> */}
-          </XStack>
-        </ScrollView>
+        </XStack>
+        <XStack gap="$6" margin="$6" marginTop="0">
+          <StyledButton flex={1} aspectRatio={1} onPress={toggleSchema}>
+            <Stack alignItems="center" justifyContent="center" gap="$2">
+              <ToggleRight size={18} color="$green11" />
+              <Text textAlign="center" color="$green11">
+                Trocar Tema
+              </Text>
+            </Stack>
+          </StyledButton>
+          <StyledButton flex={1} aspectRatio={1} onPress={signOut}>
+            <Stack alignItems="center" justifyContent="center" gap="$2">
+              <PlaySquare size={18} color="$green11" />
+              <Text color="$green11">Sair</Text>
+            </Stack>
+          </StyledButton>
+
+          {/* <Link replace asChild href="/playground">
+              <StyledButton flex={1} aspectRatio={1}>
+                <Stack alignItems="center" justifyContent="center" gap="$2">
+                  <PlaySquare size={18} color="$green11" />
+                  <Text color="$green11">Playground</Text>
+                </Stack>
+              </StyledButton>
+            </Link> */}
+        </XStack>
       </ScrollView>
     </Wrapper>
   )
