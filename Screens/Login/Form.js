@@ -22,6 +22,15 @@ export function Form() {
   const [showPass, setShowPass] = useState(false)
   const { signIn, signInLoading } = useSession()
 
+  const maskCPF = value => {
+    return value
+      .replace(/\D/g, "")
+      .replace(/(\d{3})(\d)/, "$1.$2")
+      .replace(/(\d{3})(\d)/, "$1.$2")
+      .replace(/(\d{3})(\d{1,2})/, "$1-$2")
+      .replace(/(-\d{2})\d+?$/, "$1")
+  }
+
   const onSubmit = useCallback(async () => {
     try {
       await signIn({ username, password })
@@ -46,8 +55,9 @@ export function Form() {
           <Label>CPF</Label>
           <Input
             onChangeText={setUsername}
-            value={username}
+            value={maskCPF(username)}
             keyboardType="numeric"
+            maxLength={14}
           />
         </YStack>
         <YStack>
