@@ -31,6 +31,7 @@ export default function Page() {
   }
 
   const handleOpenConection = () => {
+    console.log('[MAPA] WS: Conexão aberta')
     salas.forEach((sala) => {
       console.log('[MAPA] Se inscrevedo na sala: ', String(sala))
       sendJsonMessage({
@@ -44,11 +45,12 @@ export default function Page() {
 
   const [[_, token]] = useStorageState('session')
   const query = new URLSearchParams({ token: `Bearer ${token}` })
+
   const { getWebSocket, sendJsonMessage } = useWebSocket(
     `${process.env.EXPO_PUBLIC_WEBSOCKET_URL}/ws?${query}`,
     {
       onMessage: handlerMessage,
-      onClose: () => console.log('[MAPA] conexão fechada'),
+      onClose: (e) => console.log('[MAPA] conexão fechada', e),
       onOpen: handleOpenConection,
       onError: (err) => console.log('erro', err),
     },

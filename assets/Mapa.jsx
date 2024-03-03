@@ -40,7 +40,7 @@ export const MapaSVG = ({ state, ...props }) => (
       }}
     >
       <TSpan x={239} y={368.773}>
-        {state?.['330'] || '-'} kWh
+        {state?.['330'] ?? '-'} kWh
       </TSpan>
     </Text>
     <Text
@@ -54,7 +54,7 @@ export const MapaSVG = ({ state, ...props }) => (
       }}
     >
       <TSpan x={925} y={368.773}>
-        {state?.['331'] || '-'} kWh
+        {state?.['331'] ?? '-'} kWh
       </TSpan>
     </Text>
     <Text
@@ -68,7 +68,7 @@ export const MapaSVG = ({ state, ...props }) => (
       }}
     >
       <TSpan x={925} y={970.773}>
-        {state?.['333'] || '-'} kWh
+        {state?.['333'] ?? '-'} kWh
       </TSpan>
     </Text>
     <Text
@@ -82,7 +82,7 @@ export const MapaSVG = ({ state, ...props }) => (
       }}
     >
       <TSpan x={239} y={970.773}>
-        {state?.['332'] || '-'} kWh
+        {state?.['332'] ?? '-'} kWh
       </TSpan>
     </Text>
     <Text
@@ -156,7 +156,7 @@ export const MapaSVG = ({ state, ...props }) => (
       }}
     >
       <TSpan x={239} y={2588.77}>
-        {state?.['338'] || '-'} kWh
+        {state?.['338'] ?? '-'} kWh
       </TSpan>
     </Text>
     <Text
@@ -170,7 +170,7 @@ export const MapaSVG = ({ state, ...props }) => (
       }}
     >
       <TSpan x={925} y={2588.77}>
-        {state?.['339'] || '-'} kWh
+        {state?.['339'] ?? '-'} kWh
       </TSpan>
     </Text>
     <Text
@@ -184,7 +184,7 @@ export const MapaSVG = ({ state, ...props }) => (
       }}
     >
       <TSpan x={239} y={3190.77}>
-        {state?.['340'] || '-'} kWh
+        {state?.['340'] ?? '-'} kWh
       </TSpan>
     </Text>
     <Text
@@ -244,7 +244,7 @@ export const MapaSVG = ({ state, ...props }) => (
       }}
     >
       <TSpan x={239} y={1478.77}>
-        {state?.['334'] || '-'} kWh
+        {state?.['334'] ?? '-'} kWh
       </TSpan>
     </Text>
     <Text
@@ -258,7 +258,7 @@ export const MapaSVG = ({ state, ...props }) => (
       }}
     >
       <TSpan x={925} y={1478.77}>
-        {state?.['335'] || '-'} kWh
+        {state?.['335'] ?? '-'} kWh
       </TSpan>
     </Text>
     <Text
@@ -272,7 +272,7 @@ export const MapaSVG = ({ state, ...props }) => (
       }}
     >
       <TSpan x={925} y={2080.77}>
-        {state?.['337'] || '-'} kWh
+        {state?.['337'] ?? '-'} kWh
       </TSpan>
     </Text>
     <Text
@@ -286,7 +286,7 @@ export const MapaSVG = ({ state, ...props }) => (
       }}
     >
       <TSpan x={239} y={2080.77}>
-        {state?.['336'] || '-'} kWh
+        {state?.['336'] ?? '-'} kWh
       </TSpan>
     </Text>
     <Text

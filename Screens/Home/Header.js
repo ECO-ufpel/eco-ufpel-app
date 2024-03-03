@@ -7,7 +7,8 @@ import { useActivity } from '../../providers/ActivityWS'
 
 export function Header() {
   const { userInfo } = useSession()
-  const { currentActivity } = useActivity()
+  const { currentActivity, currentActivityLabel, loadingActivity } =
+    useActivity()
 
   const name = userInfo?.name
   const image = userInfo?.image
@@ -38,7 +39,9 @@ export function Header() {
         <Animated.View entering={FadeIn.delay(500)} style={{ maxWidth: '90%' }}>
           <Heading>{name}</Heading>
           <Text>
-            {currentActivity ? `Sala ${currentActivity}` : 'Carregando'}
+            {loadingActivity
+              ? 'carregando'
+              : currentActivityLabel ?? 'Sem Atividade no momento'}
           </Text>
         </Animated.View>
         <Avatar

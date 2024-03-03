@@ -4,7 +4,7 @@ import * as SecureStore from 'expo-secure-store'
 
 export const api = axios.create({
   baseURL: process.env.EXPO_PUBLIC_API_URL,
-  timeout: 5000,
+  timeout: 10000,
 })
 
 api.interceptors.request.use(async function (request) {

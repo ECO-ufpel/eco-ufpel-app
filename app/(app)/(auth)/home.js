@@ -53,50 +53,47 @@ export default function Page() {
               opacity={!currentActivity ? 0.5 : 1}
             >
               <Stack alignItems="center" justifyContent="center" gap="$2">
-                <CalendarClock size={18} color="$green11" />
-                <Text color="$green11">Histórico</Text>
+                <CalendarClock size={32} color="$green11" />
+                <Text color="$green11" fontSize={16}>
+                  Histórico
+                </Text>
               </Stack>
             </StyledButton>
           </Link>
           <Link asChild href="/map">
             <StyledButton flex={1} aspectRatio={1}>
               <Stack alignItems="center" justifyContent="center" gap="$2">
-                <Map size={18} color="$green11" />
-                <Text color="$green11">Mapa</Text>
+                <Map size={32} color="$green11" />
+                <Text color="$green11" fontSize={16}>
+                  Mapa
+                </Text>
               </Stack>
             </StyledButton>
           </Link>
-
-          {/* <Link replace asChild href="/playground">
-              <StyledButton flex={1} aspectRatio={1}>
-                <Stack alignItems="center" justifyContent="center" gap="$2">
-                  <PlaySquare size={18} color="$green11" />
-                  <Text color="$green11">Playground</Text>
-                </Stack>
-              </StyledButton>
-            </Link> */}
         </XStack>
         <XStack gap="$6" margin="$6" marginTop="0">
           <StyledButton flex={1} aspectRatio={1} onPress={toggleSchema}>
             <Stack alignItems="center" justifyContent="center" gap="$2">
-              <ToggleRight size={18} color="$green11" />
-              <Text textAlign="center" color="$green11">
+              <ToggleRight size={32} color="$green11" />
+              <Text textAlign="center" fontSize={16} color="$green11">
                 Trocar Tema
               </Text>
             </Stack>
           </StyledButton>
           <StyledButton flex={1} aspectRatio={1} onPress={signOut}>
             <Stack alignItems="center" justifyContent="center" gap="$2">
-              <PlaySquare size={18} color="$green11" />
-              <Text color="$green11">Sair</Text>
+              <PlaySquare size={32} color="$green11" />
+              <Text color="$green11" fontSize={16}>
+                Sair
+              </Text>
             </Stack>
           </StyledButton>
 
           {/* <Link replace asChild href="/playground">
               <StyledButton flex={1} aspectRatio={1}>
                 <Stack alignItems="center" justifyContent="center" gap="$2">
-                  <PlaySquare size={18} color="$green11" />
-                  <Text color="$green11">Playground</Text>
+                  <PlaySquare size={32} color="$green11" />
+                  <Text color="$green11" fontSize={16}>Playground</Text>
                 </Stack>
               </StyledButton>
             </Link> */}
