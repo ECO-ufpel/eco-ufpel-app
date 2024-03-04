@@ -57,17 +57,17 @@ export function ActivityProvider(props) {
           setActivityData(defaultActivityData)
 
           // Test subscription
-          const roomId = 333
-          const acitivityLabel = 'Computação Gráfica'
-          setActivityData((e) => ({
-            ...e,
-            roomId,
-            label: acitivityLabel,
-          }))
-          sendJsonMessage({
-            type: 'subscribe',
-            room_id: roomId,
-          })
+          // const roomId = 333
+          // const acitivityLabel = 'Computação Gráfica'
+          // setActivityData((e) => ({
+          //   ...e,
+          //   roomId,
+          //   label: acitivityLabel,
+          // }))
+          // sendJsonMessage({
+          //   type: 'subscribe',
+          //   room_id: roomId,
+          // })
 
           // Delete this ^
           setLoading(false)
