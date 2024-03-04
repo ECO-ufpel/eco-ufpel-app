@@ -31,8 +31,15 @@ export default function Page() {
         .get('https://backend-deploy-0bfm.onrender.com/sensor/data/history', {
           params: {
             room_id: Number(currentActivity),
-            start_time: '2024-01-25T00:00:00', // ToDo: endDate - 30 days
-            end_time: '2024-02-25T00:00:00', // ToDo: new Date()
+
+            // start_time: '2024-01-25T00:00:00', // ToDo: endDate but one month before
+            // end_time: '2024-02-25T00:00:00', // ToDo: new Date()
+            end_time: new Date().toISOString(),
+            start_time: new Date(
+              new Date().getFullYear(),
+              new Date().getMonth() - 1,
+              new Date().getDate(),
+            ).toISOString(),
           },
         })
         .then((response) => {
@@ -44,7 +51,11 @@ export default function Page() {
             value: e.avgConsumption,
           }))
           setActivityMonthHistoric(monthDates)
-          setActivityWeekHistoric(monthDates.slice(monthDates.length - 7))
+          setActivityWeekHistoric(
+            monthDates.length < 7
+              ? monthDates
+              : monthDates.slice(monthDates.length - 7),
+          )
         })
         .catch((error) => {
           console.log(
@@ -130,6 +141,7 @@ export function ChartWeek({ data }) {
           font,
           labelColor: 'green',
           formatXLabel(value) {
+            if (!value) return ''
             const year = new Date().getFullYear()
             const month = parseInt(value.split('/')[1])
             const day = parseInt(value.split('/')[0])
@@ -138,7 +150,6 @@ export function ChartWeek({ data }) {
             return weekDays[date]
           },
         }} // 👈 we'll generate axis labels using given font.
-        domainPadding={{ left: 30, top: 7, right: 30, bottom: 7 }}
       >
         {({ points, chartBounds }) => (
           <Bar
@@ -165,6 +176,8 @@ export function ChartMonth({ data }) {
   const font = useFont(inter, 12)
   const { state, isActive } = useChartPressState({ x: 0, y: { value: 0 } })
 
+  console.log('datadatadata', data)
+
   return (
     <View style={{ height: 300 }} marginVertical="$6">
       <View alignItems="center" marginBottom="$4">
@@ -181,8 +194,9 @@ export function ChartMonth({ data }) {
           font,
           labelColor: 'green',
           labelPosition: 'outset',
+          formatXLabel: (value) => value ?? '',
         }} // 👈 we'll generate axis labels using given font.
-        domainPadding={{ left: 7, top: 7, right: 7, bottom: 7 }}
+        // domainPadding={{ left: 7, top: 7, right: 7, bottom: 7 }}
         chartPressState={state}
         renderOutside={({ chartBounds }) => (
           <>
