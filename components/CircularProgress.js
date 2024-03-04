@@ -1,19 +1,10 @@
-import { useMemo } from 'react'
 import { AnimatedCircularProgress } from 'react-native-circular-progress'
-import { Button, Stack, Text } from 'tamagui'
+import { Stack, Text } from 'tamagui'
 
-export const CircularProgress = ({ max, progress, mean }) => {
-  const ideal = 60 // Recive from api
+export const CircularProgress = ({ dv, kw, mean, status }) => {
+  const max = (Number.parseInt(kw) + Number.parseInt(dv)) * 1.2
 
-  const status = useMemo(() => {
-    const idealRange = ideal * 0.15
-
-    if (progress > ideal - idealRange && progress < ideal + idealRange)
-      return 'warning'
-
-    if (progress > ideal) return 'bad'
-    return 'good'
-  }, [progress])
+  const percentageProgress = (kw / max) * 100
 
   const colors = {
     good: '#187A4D',
@@ -27,7 +18,7 @@ export const CircularProgress = ({ max, progress, mean }) => {
     <AnimatedCircularProgress
       size={300}
       width={32}
-      fill={Number.parseInt(progress)}
+      fill={percentageProgress || 0}
       tintColor={colorStatus}
       lineCap="round"
       arcSweepAngle={270}
@@ -41,12 +32,12 @@ export const CircularProgress = ({ max, progress, mean }) => {
               Uso atual:{' '}
               <Text color={colorStatus}>
                 <Text color={colorStatus} fontSize={28} fontWeight={600}>
-                  {progress}
+                  {kw ?? '-'}
                 </Text>
                 KW/h
               </Text>
             </Text>
-            <Text>Uso normal: {ideal} KW/h</Text>
+            <Text>Uso normal: {mean} KW/h</Text>
           </Stack>
         )
       }}

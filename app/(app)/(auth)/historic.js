@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { ScrollView, Text, View } from 'tamagui'
+import { Separator, Text, View } from 'tamagui'
 import { api } from '../../../service/api'
 import { useActivity } from '../../../providers/ActivityWS'
 
@@ -18,7 +18,10 @@ import { useDerivedValue } from 'react-native-reanimated'
 import { Stack } from 'expo-router'
 
 export default function Page() {
-  const { currentActivity } = useActivity()
+  const {
+    data: { roomId: currentActivity },
+  } = useActivity()
+  const [loading, setLoading] = useState(true)
   const [monthHistory, setActivityMonthHistoric] = useState([])
   const [weekHistory, setActivityWeekHistoric] = useState([])
 
@@ -33,7 +36,7 @@ export default function Page() {
           },
         })
         .then((response) => {
-          let monthDates = response.map((e) => ({
+          const monthDates = response.map((e) => ({
             day:
               new Date(e.date).getDate() +
               '/' +
@@ -44,19 +47,65 @@ export default function Page() {
           setActivityWeekHistoric(monthDates.slice(monthDates.length - 7))
         })
         .catch((error) => {
-          console.log('aqui no erro', error)
+          console.log(
+            '[HISTORICO] Erro ao carregar informações do historico',
+            error,
+          )
         })
+        .finally(() => setLoading(false))
     }
   }, [currentActivity])
 
   return (
     <View marginHorizontal="$4" marginTop="$4">
-      <Stack.Screen options={{ title: 'Histórico' }} /> 
+      <Stack.Screen options={{ title: 'Histórico' }} />
       <Text fontSize="$9">Histórico</Text>
       <Text>Referente a atividade: {currentActivity}</Text>
-      {monthHistory.length > 0 && <ChartMonth data={monthHistory} />}
-      {weekHistory.length > 0 && <ChartWeek data={weekHistory} />}
-      {/* ToDo: consumo semanal em barras */}
+      {loading ? (
+        <Text
+          textAlign="center"
+          fontSize="$6"
+          marginVertical="$10"
+          opacity={0.5}
+        >
+          Carregando...
+        </Text>
+      ) : monthHistory.length > 0 ? (
+        <ChartMonth data={monthHistory} />
+      ) : (
+        <Text
+          textAlign="center"
+          fontSize="$6"
+          marginVertical="$10"
+          opacity={0.5}
+        >
+          Sem Dados mensais referentes a essa sala
+        </Text>
+      )}
+
+      <Separator theme="light" />
+
+      {loading ? (
+        <Text
+          textAlign="center"
+          fontSize="$6"
+          marginVertical="$10"
+          opacity={0.5}
+        >
+          Carregando...
+        </Text>
+      ) : weekHistory.length > 0 ? (
+        <ChartWeek data={weekHistory} />
+      ) : (
+        <Text
+          textAlign="center"
+          fontSize="$6"
+          marginVertical="$10"
+          opacity={0.5}
+        >
+          Sem Dados semanais referentes a essa sala
+        </Text>
+      )}
     </View>
   )
 }
@@ -74,7 +123,7 @@ export function ChartWeek({ data }) {
         kW/h
       </Text>
       <CartesianChart
-        data={data}  
+        data={data}
         xKey="day"
         yKeys={['value']}
         axisOptions={{
@@ -85,7 +134,7 @@ export function ChartWeek({ data }) {
             const month = parseInt(value.split('/')[1])
             const day = parseInt(value.split('/')[0])
             const date = new Date(year, month - 1, day).getDay()
-          
+
             return weekDays[date]
           },
         }} // 👈 we'll generate axis labels using given font.
@@ -93,21 +142,22 @@ export function ChartWeek({ data }) {
       >
         {({ points, chartBounds }) => (
           <Bar
-            chartBounds={chartBounds}  // 👈 chartBounds is needed to know how to draw the bars
+            chartBounds={chartBounds} // 👈 chartBounds is needed to know how to draw the bars
             points={points.value} // 👈 points is an object with a property for each yKey
             roundedCorners={{
               topLeft: 5,
               topRight: 5,
-            }}>
+            }}
+          >
             <LinearGradient
               start={vec(0, 0)}
               end={vec(0, 400)}
-              colors={["#008000", "#23bd6d50"]}
+              colors={['#008000', '#23bd6d50']}
             />
           </Bar>
         )}
       </CartesianChart>
-  </View>
+    </View>
   )
 }
 

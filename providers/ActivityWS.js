@@ -1,6 +1,7 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useStorageState } from '../hooks'
 import useWebSocket from 'react-use-websocket'
+import { Theme } from 'tamagui'
 
 const ActivityConsumeWS = React.createContext(null)
 
@@ -13,43 +14,93 @@ export function useActivity() {
   return value
 }
 
+const defaultActivityData = {
+  label: null,
+  roomId: null,
+  currentConsumption: null,
+  usualConsumption: {
+    average: null,
+    stdDev: null,
+  },
+}
+
 export function ActivityProvider(props) {
+  const [activityData, setActivityData] = useState(defaultActivityData)
   const [loading, setLoading] = useState(true)
-  const [activityUsualConsumption, setActivityUsualConsumption] = useState({})
-  const [currentActivity, setCurrentActivity] = useState(null)
-  const [currentActivityLabel, setCurrentActivityLabel] = useState(null)
-  const [currentConsumption, setCurrentConsumption] = useState(0)
+
+  const currentConsumption = activityData.currentConsumption
+  const avg = activityData.usualConsumption.average
+  const stdDev = activityData.usualConsumption.stdDev
 
   const handlerMessage = useCallback((message) => {
-    console.log('[Provider] WS: Mensagem recebida', message.data)
-    const parsed = JSON.parse(message.data)
+    const data = JSON.parse(message.data)
+    console.log('[Provider] WS: Mensagem recebida', data)
 
-    if (parsed?.type === 'course_change') {
-      const roomId = JSON.parse(parsed.room_id)
-      setCurrentActivity(roomId)
-      setCurrentActivityLabel(
-        parsed?.current_activity === 'null' ? null : parsed.current_activity,
-      )
-
-      if (roomId) {
-        sendJsonMessage({
-          type: 'subscribe',
-          room_id: roomId,
-        })
-      }
-
-      setActivityUsualConsumption({})
-      setLoading(false)
-    } else if (parsed.type === 'expected_consumption') {
-      setActivityUsualConsumption({
-        avarage: parsed.avarage,
-        stdDev: parsed.std_dev,
-      })
+    // Consumption message doenst have type specified
+    // inject type
+    if (data['Room ID']) {
+      data.type = 'consumption'
     }
-    // Adicionar para caso a mensagem seja de troca de sala
-    else if (parsed['Room ID']) {
-      setCurrentActivity(parsed['Room ID'])
-      setCurrentConsumption(parsed.Consumption)
+
+    switch (data.type) {
+      case 'consumption': {
+        setActivityData((e) => ({
+          ...e,
+          currentConsumption: data.Consumption,
+        }))
+        break
+      }
+      case 'course_change': {
+        const isFree = !JSON.parse(data.current_activity)
+        if (isFree) {
+          setLoading(true)
+          setActivityData(defaultActivityData)
+
+          // Test subscription
+          const roomId = 333
+          const acitivityLabel = 'Computação Gráfica'
+          setActivityData((e) => ({
+            ...e,
+            roomId,
+            label: acitivityLabel,
+          }))
+          sendJsonMessage({
+            type: 'subscribe',
+            room_id: roomId,
+          })
+
+          // Delete this ^
+          setLoading(false)
+        } else {
+          const roomId = data.room_id
+          const acitivityLabel = data.current_activity
+          setActivityData((e) => ({
+            ...e,
+            roomId,
+            label: acitivityLabel,
+          }))
+          sendJsonMessage({
+            type: 'subscribe',
+            room_id: roomId,
+          })
+          setLoading(false)
+        }
+
+        break
+      }
+      case 'expected_consumption': {
+        setActivityData((e) => ({
+          ...e,
+          usualConsumption: {
+            average: Math.round(data.average * 10) / 10,
+            stdDev: Math.round(data.std_dev * 10) / 10,
+          },
+        }))
+        break
+      }
+      default: {
+        console.log('[Provider] WS: Mensagem não tratada', data)
+      }
     }
   }, [])
 
@@ -60,7 +111,6 @@ export function ActivityProvider(props) {
 
   const [[_, token]] = useStorageState('session')
   const query = new URLSearchParams({ token: `Bearer ${token}` })
-  // console.log('token', token)
 
   const { getWebSocket, sendJsonMessage } = useWebSocket(
     `${process.env.EXPO_PUBLIC_WEBSOCKET_URL}/ws?${query}`,
@@ -72,22 +122,41 @@ export function ActivityProvider(props) {
     },
   )
 
+  const consumptionStatus = useMemo(() => {
+    if (!currentConsumption || !avg || !stdDev) return 'good'
+    const maxBoardWarning = avg + stdDev
+    const minBoardWarning = avg - stdDev
+
+    if (currentConsumption < minBoardWarning) {
+      return 'good'
+    } else if (currentConsumption > maxBoardWarning) {
+      return 'bad'
+    } else {
+      return 'warning'
+    }
+  }, [avg, stdDev, currentConsumption])
+
   useEffect(() => {
     return () => {
       getWebSocket().close()
     }
   }, [])
 
+  const colors = {
+    good: 'green',
+    bad: 'red',
+    warning: 'orange',
+  }
+
   return (
     <ActivityConsumeWS.Provider
       value={{
-        loadingActivity: loading,
-        currentActivity,
-        currentActivityLabel,
-        currentConsumption,
+        data: activityData,
+        loading,
+        consumptionStatus,
       }}
     >
-      {props.children}
+      <Theme name={colors[consumptionStatus]}>{props.children}</Theme>
     </ActivityConsumeWS.Provider>
   )
 }

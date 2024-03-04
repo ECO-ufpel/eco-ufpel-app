@@ -24,7 +24,16 @@ import { useSchema } from '../../../providers/ColorSchema'
 export default function Page() {
   const { signOut } = useSession()
   const { toggleSchema } = useSchema()
-  const { currentConsumption, currentActivity } = useActivity()
+  const {
+    data: {
+      roomId,
+      currentConsumption,
+      usualConsumption: activityUsualConsumption,
+    },
+    consumptionStatus,
+  } = useActivity()
+
+  const hasActivity = !!roomId
 
   const theme = useTheme()
 
@@ -39,22 +48,27 @@ export default function Page() {
       <ScrollView flex={1}>
         <View marginVertical="$8">
           <View justifyContent="center" alignItems="center">
-            <CircularProgress max={100} progress={currentConsumption} />
+            <CircularProgress
+              dv={activityUsualConsumption.stdDev}
+              mean={activityUsualConsumption.average}
+              kw={currentConsumption}
+              status={consumptionStatus}
+            />
           </View>
         </View>
         {/* <ScrollView horizontal>
           
         </ScrollView> */}
         <XStack gap="$6" margin="$6" marginTop="0">
-          <Link asChild href="/historic" disabled={!currentActivity}>
+          <Link asChild href="/historic" disabled={!hasActivity}>
             <StyledButton
               flex={1}
               aspectRatio={1}
-              opacity={!currentActivity ? 0.5 : 1}
+              opacity={!hasActivity ? 0.5 : 1}
             >
               <Stack alignItems="center" justifyContent="center" gap="$2">
-                <CalendarClock size={32} color="$green11" />
-                <Text color="$green11" fontSize={16}>
+                <CalendarClock size={32} color="$color" />
+                <Text color="$color" fontSize={16}>
                   Histórico
                 </Text>
               </Stack>
@@ -63,8 +77,8 @@ export default function Page() {
           <Link asChild href="/map">
             <StyledButton flex={1} aspectRatio={1}>
               <Stack alignItems="center" justifyContent="center" gap="$2">
-                <Map size={32} color="$green11" />
-                <Text color="$green11" fontSize={16}>
+                <Map size={32} color="$color" />
+                <Text color="$color" fontSize={16}>
                   Mapa
                 </Text>
               </Stack>
@@ -74,16 +88,16 @@ export default function Page() {
         <XStack gap="$6" margin="$6" marginTop="0">
           <StyledButton flex={1} aspectRatio={1} onPress={toggleSchema}>
             <Stack alignItems="center" justifyContent="center" gap="$2">
-              <ToggleRight size={32} color="$green11" />
-              <Text textAlign="center" fontSize={16} color="$green11">
+              <ToggleRight size={32} color="$color" />
+              <Text textAlign="center" fontSize={16} color="$color">
                 Trocar Tema
               </Text>
             </Stack>
           </StyledButton>
           <StyledButton flex={1} aspectRatio={1} onPress={signOut}>
             <Stack alignItems="center" justifyContent="center" gap="$2">
-              <PlaySquare size={32} color="$green11" />
-              <Text color="$green11" fontSize={16}>
+              <PlaySquare size={32} color="$color" />
+              <Text color="$color" fontSize={16}>
                 Sair
               </Text>
             </Stack>
@@ -92,8 +106,8 @@ export default function Page() {
           {/* <Link replace asChild href="/playground">
               <StyledButton flex={1} aspectRatio={1}>
                 <Stack alignItems="center" justifyContent="center" gap="$2">
-                  <PlaySquare size={32} color="$green11" />
-                  <Text color="$green11" fontSize={16}>Playground</Text>
+                  <PlaySquare size={32} color="$color" />
+                  <Text color="$color" fontSize={16}>Playground</Text>
                 </Stack>
               </StyledButton>
             </Link> */}
