@@ -26,12 +26,12 @@ api.interceptors.response.use(
     const token = await SecureStore.getItemAsync('session')
     const url = error.config.url
 
-    if (isForbidden && token && String(url).endsWith('/me')) {
+    if (token && String(url).endsWith('/me')) {
       await SecureStore.deleteItemAsync('session')
       router.replace('/sign-in')
     }
 
-    console.log('[AXIOS] Error', error)
+    console.log('[AXIOS] Error', String(url), error)
 
     return Promise.reject(error)
   },

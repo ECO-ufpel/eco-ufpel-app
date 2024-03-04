@@ -67,8 +67,8 @@ export default function Page() {
               opacity={!hasActivity ? 0.5 : 1}
             >
               <Stack alignItems="center" justifyContent="center" gap="$2">
-                <CalendarClock size={32} color="$color" />
-                <Text color="$color" fontSize={16}>
+                <CalendarClock size={32} color={theme.color10} />
+                <Text color={theme.color10} fontSize={16}>
                   Histórico
                 </Text>
               </Stack>
@@ -77,8 +77,8 @@ export default function Page() {
           <Link asChild href="/map">
             <StyledButton flex={1} aspectRatio={1}>
               <Stack alignItems="center" justifyContent="center" gap="$2">
-                <Map size={32} color="$color" />
-                <Text color="$color" fontSize={16}>
+                <Map size={32} color={theme.color10} />
+                <Text color={theme.color10} fontSize={16}>
                   Mapa
                 </Text>
               </Stack>
@@ -88,16 +88,16 @@ export default function Page() {
         <XStack gap="$6" margin="$6" marginTop="0">
           <StyledButton flex={1} aspectRatio={1} onPress={toggleSchema}>
             <Stack alignItems="center" justifyContent="center" gap="$2">
-              <ToggleRight size={32} color="$color" />
-              <Text textAlign="center" fontSize={16} color="$color">
+              <ToggleRight size={32} color={theme.color10} />
+              <Text textAlign="center" fontSize={16} color={theme.color10}>
                 Trocar Tema
               </Text>
             </Stack>
           </StyledButton>
           <StyledButton flex={1} aspectRatio={1} onPress={signOut}>
             <Stack alignItems="center" justifyContent="center" gap="$2">
-              <PlaySquare size={32} color="$color" />
-              <Text color="$color" fontSize={16}>
+              <PlaySquare size={32} color={theme.color10} />
+              <Text color={theme.color10} fontSize={16}>
                 Sair
               </Text>
             </Stack>
@@ -106,8 +106,8 @@ export default function Page() {
           {/* <Link replace asChild href="/playground">
               <StyledButton flex={1} aspectRatio={1}>
                 <Stack alignItems="center" justifyContent="center" gap="$2">
-                  <PlaySquare size={32} color="$color" />
-                  <Text color="$color" fontSize={16}>Playground</Text>
+                  <PlaySquare size={32} color={theme.color10} />
+                  <Text color={theme.color10} fontSize={16}>Playground</Text>
                 </Stack>
               </StyledButton>
             </Link> */}
